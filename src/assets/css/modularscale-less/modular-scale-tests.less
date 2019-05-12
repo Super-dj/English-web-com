@@ -1,0 +1,118 @@
+@import "modular-scale";
+
+.test-ms-function {
+  .upscale {
+    .ms(2, 16, @minor-sixth);
+    value: 2;
+    base: 16;
+    ratio: @minor-sixth;
+    result: @ms;
+
+    .success when (@ms = 40.96000000000001em) {
+      ms-upscale: pass;
+    }
+
+    .fail when not (@ms = 40.96000000000001em) {
+      ms-upscale: FAILED;
+      expected: 40.96000000000001em;
+    }
+  }
+
+  .downscale {
+    .ms(-2, 16, @minor-sixth);
+    value: -2;
+    base: 16;
+    ratio: @minor-sixth;
+    result: @ms;
+
+    .success when (@ms = 6.249999999999999em) {
+      ms-downscale: pass;
+    }
+
+    .fail when not (@ms = 6.249999999999999em) {
+      ms-downscale: FAILED!;
+      expected: 6.249999999999999em;
+    }
+  }
+}
+
+.test-multiple-bases {
+  .upscale {
+    .ms(2, 14 18, @major-second);
+    value: 2;
+    bases: 14 18;
+    ratio: @major-second;
+    result: @ms;
+
+    .success when (@ms = 15.75em) {
+      ms-upscale-multi-bases: pass;
+    }
+
+    .fail when not (@ms = 15.75em) {
+      ms-upscale-multi-bases: FAILED!;
+      expected: 15.75em;
+    }
+  }
+
+  .downscale {
+    .ms(-1, 14 18, @major-third);
+    value: -1;
+    base: 16;
+    ratio: @major-third;
+    result: @ms;
+
+    .success when (@ms = 11.52em) {
+      ms-downscale-multi-bases: pass;
+    }
+
+    .fail when not (@ms = 11.52em) {
+      ms-downscale-multi-bases: FAILED!;
+      expected: 11.52em;
+    }
+  }
+}
+
+.test-multiple-ratios {
+  .upscale {
+    .ms(4, 12, @major-tenth @octave);
+    value: 4;
+    base: 12;
+    ratios: @major-tenth @octave;
+    result: @ms;
+
+    .success when (@ms = 75em) {
+      ms-upscale-multi-ratios: pass;
+    }
+
+    .fail when not (@ms = 75em) {
+      ms-upscale-multi-ratios: FAILED!;
+      expected: 75em;
+    }
+  }
+
+  .downscale {
+    .ms(-4, 12, @major-tenth @octave);
+    value: -4;
+    base: 12;
+    ratios: @major-tenth @octave;
+    result: @ms;
+
+    .success when (@ms = 1.92em) {
+      ms-downscale-multi-ratios: pass;
+    }
+
+    .fail when not (@ms = 1.92em) {
+      ms-downscale-multi-ratios: FAILED!;
+      expected: 1.92em;
+    }
+  }
+}
+
+//@if ms-list(-3, 3, 10 16, $major-third) != (6.5536 8 8.192 10 10.24 12.5 12.8) {
+//@debug "function ms-list(): FAIL!";
+//@warn "function ms-list(-3, 3, 10 16, $major-third)";
+//@debug "Result:   (#{ms-list(-3, 3, 10 16, $major-third)})";
+//@debug "Intended: (6.5536 8 8.192 10 10.24 12.5 12.8)";
+//}@else {
+//@warn "function ms-list(): pass";
+//}

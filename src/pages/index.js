@@ -4,7 +4,8 @@
  * describe: pages(管理pages的管理文件)
  **/
 
-export { default as FTAbout } from "./FTAbout";
+export { default as FTStudyPage } from "./FTStudyPage";
+export * from "./userIndex";
 export { default as FTHome } from "./FTHome";
 export { default as FTLogin } from "./admin/FTLogin";
 export { default as FTIndex } from "./admin/FTIndex";

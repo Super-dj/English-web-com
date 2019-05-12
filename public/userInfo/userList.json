@@ -1,0 +1,26 @@
+[
+  {
+    "name": "张洪涛",
+    "sex": 0,
+    "headerUrl": "",
+    "roles": 0,
+    "id": 22222222,
+    "password": 123456
+  },
+  {
+    "name": "武子键",
+    "sex": 1,
+    "headerUrl": "",
+    "roles": 0,
+    "id": 11111111,
+    "password": 123456
+  },
+  {
+    "name": "乔世达",
+    "sex": 0,
+    "headerUrl": "",
+    "roles": 1,
+    "id": 33333333,
+    "password": 123456
+  }
+]

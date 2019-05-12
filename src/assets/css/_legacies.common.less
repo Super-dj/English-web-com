@@ -1,0 +1,239 @@
+ @fontColor: #000000;
+@defaultColor: rgb(94, 101, 111);
+@canvasColor: rgb(220, 220, 220);
+@defaultWhite: rgba(255, 255, 255, 1);
+@normalWhite: rgba(157,162,173,1);
+@themeColor: rgba(44, 125, 250, 1);
+@resourceW: 391px;
+@maskC: rgba(237, 237, 237, 0.85);
+@fontCheckColor: #538AED;
+@handleH: 44px;
+@containerH: 184px;
+@headerHeight: 56px;
+@leftWidth: 426px;
+@rightWidth: 164px;
+/*
+  css交互渐变的通用方法
+*/
+.transitionClass(@object) {
+  transition: @object 0.3s linear;
+  -moz-transition: @object 0.3s;
+  -webkit-transition: @object 0.3s;
+  -o-transition: @object 0.3s;
+}
+/*
+  svg修改颜色的通用方法
+ */
+.changeSvgColor(@color){
+    polygon,
+    path,
+    circle {
+      fill: @color !important;
+    }
+}
+/*
+  水波纹CSS类
+*/
+.waves-animation {
+  position: absolute;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.7s ease-out;
+  transition-property: transform, opacity, -webkit-transform;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  pointer-events: none;
+}
+/*
+  flex布局通用样式
+*/
+.flex{
+  display: flex;
+}
+.fJC{
+  display: flex;
+  justify-content: center;
+}
+.fJAC{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fC{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.disabled{
+
+}
+
+.absolute {
+  position: absolute!important;
+}
+
+.relative {
+  position: relative;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.aLT {
+  .absolute;
+  left: 0;
+  top: 0;
+}
+
+.aLTH{
+ .aLT;
+  top: @headerHeight;
+  bottom: 0;
+}
+
+.aRT {
+  .absolute;
+  right: 0;
+  top: 0;
+}
+
+.aLB {
+  .absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.aRB {
+  .absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.aLR {
+  .absolute;
+  left: 0;
+  right: 0;
+}
+
+.aTB {
+  .absolute;
+  bottom: 0;
+  top: 0;
+}
+
+.aC {
+  .absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.el-slider {
+  .el-slider__runway {
+    height: 2px;
+    .el-slider__bar {
+      height: 2px;
+    }
+    .el-slider__button-wrapper {
+      top: -17px;
+      .el-slider__button {
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+}
+.blurBtn{
+  color: #fff;
+  background: #2c7dfa;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover{
+    background: #418aff;
+  }
+  &:active{
+    background: #418aff;
+    color: rgba(255,255,255,0.5);
+  }
+}
+.orangeBtn{
+  color: #fff;
+  background: #feae46;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  &:hover{
+    background: #ffb657;
+  }
+  &:active{
+    background: #ffb657;
+    color: rgba(255,255,255,0.5);
+  }
+}
+.greenBtn{
+  color: #fff;
+  background: #00b982;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  &:hover{
+    background: #2ac891;
+  }
+  &:active{
+    background: #2ac891;
+    color: rgba(255,255,255,0.5);
+  }
+}
+.opacityBtn{
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover{
+    color: #272b33;
+    background: rgba(255,255,255,0.9);
+  }
+  &:active{
+    background: rgba(255,255,255,0.9);
+    color: rgba(255,255,255,0.5);
+  }
+}
+.errorDsc{
+  text-align: left;
+  color: #f6576e;
+  font-size: 12px;
+  line-height: 12px;
+  margin-top: 3px;
+}
+.blueWords{
+  color: #2c7dfa;
+  cursor: pointer;
+}
+/*loading Icon*/
+.addMoreBlue>div{
+  background: #2c7dfa;
+}
+.addMoreWhite>div{
+  background: #fff;
+}
+.btnLoadingBlue .sk-circle:before{
+  background: #2c7dfa!important;
+}
+.btnLoadingSmall{
+  width: 12px!important;
+  height: 12px!important;
+}

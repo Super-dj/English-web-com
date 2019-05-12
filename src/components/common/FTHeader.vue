@@ -1,46 +1,86 @@
 <template>
-  <div :class="$style.container">
-    <div :class="$style.title">资源管理平台</div>
-    <div :class="$style.logout">
-      <span :class="$style.tips">
-        欢迎<span :class="$style.userName">{{ userName }}</span>
-        登录
-      </span>
-      <el-button
-        type="primary"
-        icon="el-icon-back"
-        size="mini"
-        :round="true"
-        @click="_loginOut"
-      >
-        登出
-      </el-button>
+  <div>
+    <div :class="$style.container">
+      <div :class="$style.title" @click="_backIndex">
+        《专业外语》精品课程信息网
+      </div>
+      <div :class="$style.right">
+        <div v-if="_userInfo" :class="$style.logout">
+          <span :class="$style.tips">
+            欢迎<span :class="$style.userName">{{ _userInfo.name }}</span>
+            登录
+          </span>
+          <el-button
+            type="primary"
+            icon="el-icon-back"
+            size="mini"
+            :round="true"
+            @click="_personInfo"
+          >
+            个人中心
+          </el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-back"
+            size="mini"
+            :round="true"
+            @click="_loginOut"
+          >
+            登出
+          </el-button>
+        </div>
+        <div v-else>
+          <el-button size="mini" @click="_login">登录</el-button>
+          <el-button size="mini" @click="_forget">忘记密码</el-button>
+        </div>
+        <FTInput theme="light" :class="$style.searchBar"></FTInput>
+      </div>
     </div>
+    <FTNavMenu :info="listInfo"></FTNavMenu>
   </div>
 </template>
 
 <script>
-import { FTApi } from "FTUtils";
+import FTLogin from "FTComponents/common/FTLogin";
+import { FTNavMenu, FTInput } from "FTComponents/ui-library";
+import { FTMutationTypes } from "FTConstants";
+const { SHOW_DIALOG, GET_USER_INFO, LOGOUT } = FTMutationTypes;
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "FTHeader",
+  components: { FTNavMenu, FTInput },
   data() {
     return {
-      userName: "administer"
+      userName: "administer",
+      listInfo: [
+        { lable: "首页", path: "/page1" },
+        { lable: "大讲堂", path: "/page2" },
+        { lable: "课程", path: "/page3" },
+        { lable: "论坛", path: "/page4" }
+      ]
     };
   },
+  computed: {
+    ...mapGetters({ _userInfo: GET_USER_INFO })
+  },
   methods: {
+    ...mapActions([SHOW_DIALOG, LOGOUT]),
     _loginOut() {
-      FTApi.FTAdminLoginOut()
-        .then(res => {
-          if (res.data.code === 0) {
-            this.$message({ message: "退出成功", type: "success" });
-            this.$router.replace("/login");
-          }
-        })
-        .catch(err => {
-          this.$message({ message: "网络错误", type: "error" });
-          console.log(err);
-        });
+      this[LOGOUT]().then(() => {
+        this.$router.push({ path: "/page1" });
+      });
+    },
+    _personInfo() {
+      this.$router.push({ path: "/personalInfo" });
+    },
+    _login() {
+      this[SHOW_DIALOG]({ isShow: true, template: FTLogin });
+    },
+    _forget() {
+      this[SHOW_DIALOG]({ isShow: true });
+    },
+    _backIndex() {
+      this.$router.push({ path: "/page1" });
     }
   }
 };
@@ -50,21 +90,27 @@ export default {
 .container {
   display: flex;
   justify-content: space-between;
-  height: 60px;
   .title {
+    margin: auto 0;
     font-size: 36px;
+    cursor: pointer;
   }
-  .logout {
+  .right {
     display: flex;
-    align-items: center;
-    .userName {
-      color: #18a500;
-      margin: 0 5px;
+    flex-direction: column;
+    .logout {
+      .userName {
+        color: #18a500;
+        margin: 0 5px;
+      }
+      .tips {
+        font-size: 16px;
+        line-height: 28px;
+        margin: 0 5px;
+      }
     }
-    .tips {
-      font-size: 16px;
-      line-height: 28px;
-      margin: 0 5px;
+    .searchBar {
+      margin: 5px 0;
     }
   }
 }

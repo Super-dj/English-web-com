@@ -1,125 +1,62 @@
-* {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
+@import "./common.less";
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-  margin: 0;
 }
 
-html {
-  font-size: 14px;
-  height: 100%;
+:root {
+  font: @base-font-size/1 @base-font-family;
   width: 100%;
-  overflow: hidden;
-}
-
-::-webkit-scrollbar {
-  width: 0;
-  &:horizontal {
-    height: 0;
-  }
-}
-
-body {
-  text-align: left;
-  color: #5B616B;
-  line-height: 1.4;
-  font-family: Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 100%;
-  font-weight: 400;
   height: 100%;
-  width: 100%;
-  overflow: hidden !important;
-  //background: #000000 !important;
-  z-index: 50;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 }
 
-//去掉ie下的input的X。
-input::-ms-clear {
-  display: none;
+body {
+  height: 100%;
+  width: 100%;
+  min-width: @page-min-width;
+  min-height: @page-min-height;
 }
 
-ul, ol, li, p, img, div, a, span, label, .btn {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  line-height: 1;
+}
+
+ul,
+ol {
   margin: 0;
   padding: 0;
-  outline: none !important;
-  list-style-type: none;
-
+  list-style: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 400;
-  margin: 0 auto;
+input {
+  font: inherit;
   padding: 0;
-  outline: none !important;
-}
 
-.u-fl {
-  float: left;
-}
-
-.u-fr {
-  float: right;
-}
-
-@height: 48px;
-@W: 44px;
-.u-svg-center {
-  &.disabled {
-    path {
-      fill: #353535;
-    }
-    svg {
-      &:active {
-        path {
-          fill: #353535;
-        }
-      }
-    }
-
-  }
-  &.unset {
-    path {
-      fill: none;
-    }
-  }
-  svg {
-    display: block;
-    margin: auto;
-    max-width: @W/2;
-    max-height: @W/2;
-    &.active, &:active {
-      path {
-        fill: #4F85EC;
-      }
-    }
-
-    path {
-      fill: #ffffff;
-    }
+  //去掉ie下的input的X。
+  &::-ms-clear {
+    display: none;
   }
 }
 
-.u-status-btn {
-  width: @W;
-  height: @W;
-  line-height: @W;
-  background: rgba(53, 53, 53, 1);
-  border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, .2);
-  text-align: center;
-  box-sizing: border-box;
-  display: flex;
-  margin: 0 15px;
+button {
+  font: inherit;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  background: transparent;
+  appearance: none;
 }
 
-.form-control {
-  &:focus {
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0);
-    border: 1px solid #ced4da;
-  }
+svg {
+  fill: currentColor;
 }

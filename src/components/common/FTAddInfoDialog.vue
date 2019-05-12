@@ -133,7 +133,6 @@
 <script>
 import { FTApi } from "FTUtils";
 import { FTMutationTypes } from "FTConstants";
-import { autoChange } from "FTConfig";
 import { mapGetters, mapActions } from "vuex";
 
 const {
@@ -344,10 +343,7 @@ export default {
       this.activeDate = [];
     }
   },
-  mounted() {
-    let baseUrl = autoChange(location.hostname);
-    this.uploadIMG = baseUrl + "/banner/fileUpload";
-  }
+  mounted() {}
 };
 </script>
 

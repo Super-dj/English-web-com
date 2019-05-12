@@ -13,14 +13,15 @@ import {
   mutations,
   FTLocalStore,
   FTViewStore,
-  FTAdminStore
+  FTAdminStore,
+  FTUserStore
 } from "FTStore";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state,
-  modules: [FTLocalStore, FTViewStore, FTAdminStore],
+  modules: [FTLocalStore, FTViewStore, FTAdminStore, FTUserStore],
   getters,
   mutations,
   actions

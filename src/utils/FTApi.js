@@ -3,42 +3,24 @@
  * createTime: 2019/2/12
  * describe: FTApi
  **/
-const Axios = require("axios");
+const Axios = require("./axios");
+import qs from "qs";
 
-Axios.defaults.withCredentials = true;
 export const FTApi = {
-  FTAdminLogin(userInfo) {
-    return Axios.post("/login", userInfo, {
-      headers: {
-        "content-type": "application/x-www-form-urlencoded"
-      },
-      params: {
-        ...userInfo
-      }
-    });
+  // FTDeleteBanner(id) {
+  //   return Axios.post(`/banner/delete?id=${id}`);
+  // }
+  FTLogin(params) {
+    let _params = {
+      ...params
+    };
+    return Axios.post("/user/login", qs.stringify({ ..._params }));
   },
-  FTAdminLoginOut() {
-    return Axios.post("/loginOut", {
-      headers: {
-        "content-type": "application/x-www-form-urlencoded"
-      }
-    });
+  FTChangeInfo(paramas) {
+    let _params = { ...paramas };
+    return Axios.get("/user/changeInfo", { params: { ..._params } });
   },
-  FTAdminRegister(userInfo) {
-    return Axios.post("/register", userInfo);
-  },
-  FTGetBannerList(options) {
-    return Axios.get("/banner/getAll", {
-      params: { ...options }
-    });
-  },
-  FTAddBanner(options) {
-    return Axios.post("/banner/create", options);
-  },
-  FTUpdateBanner(options) {
-    return Axios.put("/banner/update", options);
-  },
-  FTDeleteBanner(id) {
-    return Axios.post(`/banner/delete?id=${id}`);
+  FTGetNoticeInfo() {
+    return Axios.get("/user/noticeInfo");
   }
 };
