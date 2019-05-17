@@ -19,7 +19,8 @@ export default {
     type: null,
     dialogInfo: {
       status: false,
-      template: null
+      template: null,
+      addCourse: null
     }
   },
   getters: {
@@ -38,7 +39,7 @@ export default {
       commit(SHOW_DIALOG, data);
     },
     [HIDDEN_DIALOG]({ commit }) {
-      commit(SHOW_DIALOG, { isShow: false, template: null });
+      commit(SHOW_DIALOG, { isShow: false, template: null, addCourse: null });
     }
   },
   mutations: {
@@ -48,6 +49,7 @@ export default {
     [SHOW_DIALOG](state, data) {
       state.dialogInfo.status = data.isShow;
       state.dialogInfo.template = data.template;
+      state.dialogInfo.addCourse = { ...data.addCourse };
     }
   }
 };

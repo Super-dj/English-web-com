@@ -23,5 +23,10 @@ export default {
   SET_EMIT: "setEmit",
   CHANGE_INFO: "changeInfo",
   SET_NOTICE_INFO: "setNoticeInfo",
-  GET_NOTICE_INFO: "getNoticeInfo"
+  GET_NOTICE_INFO: "getNoticeInfo",
+  CHANGE_PWD: "changePwd",
+  GET_COURSE_INFO: "getCourseInfo",
+  SET_COURSE_INFO: "setCourseInfo",
+  GET_CHAPTER_INFO: "getChapterInfo",
+  SET_CHAPTER_INFO: "setChapterInfo"
 };

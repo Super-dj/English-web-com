@@ -33,6 +33,20 @@ export default {
       activeIndex: "0"
     };
   },
+  computed: {
+    route() {
+      return this.$route;
+    }
+  },
+  watch: {
+    route: {
+      handler(curVul) {
+        if (curVul.path.indexOf("/page1") != -1) this.activeIndex = "0";
+        if (curVul.path.indexOf("/page3") != -1) this.activeIndex = "2";
+      },
+      deep: true
+    }
+  },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);

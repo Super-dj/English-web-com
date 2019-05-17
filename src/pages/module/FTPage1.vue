@@ -29,7 +29,11 @@
           :key="index"
           :class="$style.itemInfo"
         >
-          <FTCardInfo :cardInfo="item"></FTCardInfo>
+          <FTCardInfo
+            :cardInfo="item"
+            @handleClick="_handleClick"
+            @handleMore="_handleMore"
+          ></FTCardInfo>
         </div>
       </div>
     </div>
@@ -38,11 +42,12 @@
 </template>
 
 <script>
+import FTLogin from "FTComponents/common/FTLogin";
 import { FTCardInfo } from "FTComponents/ui-library";
 import { mapGetters, mapActions } from "vuex";
 import { FTMutationTypes } from "FTConstants";
 
-const { GET_NOTICE_INFO, SET_NOTICE_INFO } = FTMutationTypes;
+const { GET_NOTICE_INFO, SET_NOTICE_INFO, SHOW_DIALOG } = FTMutationTypes;
 export default {
   name: "FTPage1",
   components: { FTCardInfo },
@@ -53,10 +58,11 @@ export default {
     return {
       sourceInfo: [
         {
+          part: 1,
           cardName: "最新资源",
           cardType: "更多",
           list: [
-            { name: "kecheng1", time: "2019/1/21" },
+            { name: "kecheng1", time: "2019/1/21", id: 1 },
             { name: "kecheng2", time: "2019/1/21" },
             { name: "kecheng4", time: "2018/9/21" },
             { name: "kecheng5", time: "2018/5/21" },
@@ -65,6 +71,7 @@ export default {
           ]
         },
         {
+          part: 2,
           cardName: "资源排行",
           cardType: "更多",
           list: [
@@ -77,6 +84,7 @@ export default {
           ]
         },
         {
+          part: 3,
           cardName: "推荐资源",
           cardType: "更多",
           list: [
@@ -89,23 +97,25 @@ export default {
           ]
         },
         {
-          cardName: "共享资源",
+          part: 4,
+          cardName: "共享资源网站",
           cardType: "更多",
-          list: [
-            { name: "共享1", time: "2019/1/21" },
-            { name: "共享1", time: "2019/1/21" },
-            { name: "共享1", time: "2018/9/21" },
-            { name: "共享1", time: "2018/5/21" },
-            { name: "共享1", time: "2018/3/21" },
-            { name: "共享1", time: "2018/3/21" }
-          ]
+          list: [{ name: "网易公开课", url: "https://open.163.com/" }]
         }
       ]
     };
   },
 
   methods: {
-    ...mapActions([SET_NOTICE_INFO])
+    ...mapActions([SET_NOTICE_INFO, SHOW_DIALOG]),
+    _handleClick(data) {
+      if (localStorage.userInfo)
+        this.$router.push({ name: "study", params: { ...data } });
+      else this[SHOW_DIALOG]({ isShow: true, template: FTLogin });
+    },
+    _handleMore(data) {
+      this.$router.push({ name: "page3", params: { ...data } });
+    }
   },
 
   created() {

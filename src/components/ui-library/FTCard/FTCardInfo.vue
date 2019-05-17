@@ -2,11 +2,19 @@
   <el-card class="box-card">
     <div v-if="cardInfo.cardName" slot="header" class="clearfix">
       <span>{{ cardInfo.cardName }}</span>
-      <el-button style="float: right; padding: 3px 0" type="text">{{
-        cardInfo.cardType
-      }}</el-button>
+      <el-button
+        style="float: right; padding: 3px 0"
+        type="text"
+        @click="_handleMore(cardInfo)"
+        >{{ cardInfo.cardType }}</el-button
+      >
     </div>
-    <div v-for="(item, index) in cardInfo.list" :key="index" class="text item">
+    <div
+      v-for="(item, index) in cardInfo.list"
+      :key="index"
+      class="text item"
+      @click="handleClick(item)"
+    >
       {{ item.name }}
       <span class="time">{{ item.time }}</span>
     </div>
@@ -24,6 +32,16 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    handleClick(item) {
+      if (item.url) window.open(item.url);
+      if (item.id) this.$emit("handleClick", item);
+    },
+    _handleMore(item) {
+      console.log(item);
+      if (item.part) this.$emit("handleMore", item);
+    }
   }
 };
 </script>
@@ -59,5 +77,6 @@ export default {
 
 .box-card {
   width: 280px;
+  min-height: 293px;
 }
 </style>

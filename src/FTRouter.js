@@ -10,8 +10,10 @@ import { FTIndexPage, FTStudy } from "FTRouter";
 
 Vue.use(Router);
 
-export default new Router({
+const route = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [FTIndexPage, FTStudy]
 });
+
+export default route;

@@ -22,5 +22,17 @@ export const FTApi = {
   },
   FTGetNoticeInfo() {
     return Axios.get("/user/noticeInfo");
+  },
+  FTChangePwd(params) {
+    return Axios.post("/user/changePwd", qs.stringify({ ...params }));
+  },
+  FTGetCouresInfo(params) {
+    return Axios.get("/user/course", { params });
+  },
+  FTGetChapterInfo(params) {
+    return Axios.get("/user/courseDetInfo", { params });
+  },
+  FTAddCourseInfo(params) {
+    return Axios.post("/user/addCourseInfo", qs.stringify({ ...params }));
   }
 };

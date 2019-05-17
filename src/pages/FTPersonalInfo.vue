@@ -18,6 +18,7 @@
             text-color="#fff"
             active-text-color="#ffd04b"
             :router="true"
+            @select="selectItem"
           >
             <el-menu-item index="1" route="/personalInfo/change">
               <span slot="title">修改个人信息</span>
@@ -32,11 +33,7 @@
             >
               <span slot="title">查看授课信息</span>
             </el-menu-item>
-            <el-menu-item
-              index="3"
-              route="/personalInfo/courseSelection"
-              v-else
-            >
+            <el-menu-item index="3" route="/personalInfo/course" v-else>
               <span slot="title">查看选课信息</span>
             </el-menu-item>
           </el-menu>
@@ -50,10 +47,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { FTMutationTypes } from "FTConstants";
 
-const { GET_USER_INFO } = FTMutationTypes;
+const { GET_USER_INFO, SET_COURSE_INFO } = FTMutationTypes;
 export default {
   name: "FTPersonalInfo",
   computed: {
@@ -68,6 +65,18 @@ export default {
     active(curVal) {
       if (curVal === "1") {
         this.$router.push({ path: "change" });
+      }
+    }
+  },
+  methods: {
+    ...mapActions([SET_COURSE_INFO]),
+    selectItem(index) {
+      this.active = index;
+      if (index == "3") {
+        this[SET_COURSE_INFO]({
+          id: this._userInfo.id,
+          role: this._userInfo.role
+        });
       }
     }
   }
@@ -99,7 +108,7 @@ export default {
   }
   .right {
     position: relative;
-    left: 500px;
+    margin-left: 210px;
   }
 }
 </style>

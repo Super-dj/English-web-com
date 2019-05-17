@@ -68,13 +68,13 @@ export default {
     background: linear-gradient(135deg, rgb(191, 206, 232), rgb(188, 167, 204));
     box-shadow: 0 0 13px 0 rgba(0, 0, 0, 0.1);
     border-radius: 6px;
-    height: 540px;
+    /*height: 540px;*/
     .el-dialog__header {
       display: none;
     }
     .el-dialog__body {
       padding: 0;
-      height: 540px;
+      min-height: 540px;
     }
   }
   .el-checkbox {

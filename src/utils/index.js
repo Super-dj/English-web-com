@@ -30,6 +30,7 @@ export function formatNumber(n) {
 }
 
 export function formatTime(date) {
+  console.log(date);
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();

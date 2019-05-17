@@ -1,21 +1,21 @@
 <template>
   <div>
     <el-form :model="form" size="mini" :rules="rules" ref="submitForm">
-      <el-form-item
-        label="账号"
-        :label-width="formLabelWidth"
-        prop="bannername"
-      >
+      <el-form-item label="账号" :label-width="formLabelWidth" prop="id">
         <el-input v-model="form.id" autocomplete="off" disabled></el-input>
       </el-form-item>
-      <el-form-item
-        label="姓名"
-        :label-width="formLabelWidth"
-        prop="bannername"
-      >
+      <el-form-item label="姓名" :label-width="formLabelWidth" prop="name">
         <el-input v-model="form.name" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="性别" :label-width="formLabelWidth" prop="ordinal">
+      <el-form-item
+        label="简介"
+        v-if="_userInfo.role"
+        :label-width="formLabelWidth"
+        prop="pre"
+      >
+        <el-input v-model="form.pre" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="性别" :label-width="formLabelWidth" prop="sex">
         <el-radio v-model="form.sex" label="0">男</el-radio>
         <el-radio v-model="form.sex" label="1">女</el-radio>
       </el-form-item>
@@ -59,13 +59,15 @@ export default {
         id: "",
         name: "",
         sex: "",
-        avatar: ""
+        avatar: "",
+        pre: ""
       },
       imageBigUrl: "",
       uploadIMG: HOST_ADDRESS + "/user/update",
       rules: {
-        name: [{ required: true, message: "请输入标题", trigger: "blur" }],
-        sex: [{ required: true, message: "请输入序号", trigger: "blur" }]
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        pre: [{ required: true, message: "请输入个人简介", trigger: "blur" }],
+        sex: [{ required: true, message: "请选择性别", trigger: "blur" }]
       }
     };
   },

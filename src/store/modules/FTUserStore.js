@@ -8,13 +8,20 @@ const {
   LOGOUT,
   CHANGE_INFO,
   GET_NOTICE_INFO,
-  SET_NOTICE_INFO
+  SET_NOTICE_INFO,
+  CHANGE_PWD,
+  GET_COURSE_INFO,
+  SET_COURSE_INFO,
+  GET_CHAPTER_INFO,
+  SET_CHAPTER_INFO
 } = FTMutationTypes;
 
 export default {
   state: {
     userInfo: null,
-    noticeInfo: null
+    noticeInfo: null,
+    courseInfo: null,
+    chapterInfo: {}
   },
   getters: {
     [GET_USER_INFO](state) {
@@ -29,7 +36,11 @@ export default {
     },
     [GET_NOTICE_INFO](state) {
       return state.noticeInfo;
-    }
+    },
+    [GET_COURSE_INFO](state) {
+      return state.courseInfo;
+    },
+    [GET_CHAPTER_INFO]() {}
   },
   actions: {
     [SET_USER_INFO]({ commit, dispatch }, data) {
@@ -77,6 +88,35 @@ export default {
           commit(SET_NOTICE_INFO, data);
         }
       });
+    },
+    // eslint-disable-next-line
+    [CHANGE_PWD]({ commit }, data) {
+      let { id, oldPwd, newPwd, role } = data,
+        params = { id, oldPwd, newPwd, role };
+      return FTApi.FTChangePwd(params);
+    },
+    [SET_COURSE_INFO]({ commit }, data) {
+      FTApi.FTGetCouresInfo(data).then(res => {
+        let { code, data } = res.data;
+        if (code == "200" && data.length) {
+          commit(SET_COURSE_INFO, data);
+        }
+      });
+    },
+    [SET_CHAPTER_INFO]({ state, commit }, id) {
+      if (state.chapterInfo[id]) {
+        return new Promise(resolve => {
+          resolve({ data: { ...state.chapterInfo[id] } });
+        });
+      } else {
+        return FTApi.FTGetChapterInfo({ id: id }).then(res => {
+          let { data, code } = res.data;
+          if (code == "200") {
+            commit(SET_CHAPTER_INFO, data);
+          }
+          return { data };
+        });
+      }
     }
   },
   mutations: {
@@ -90,6 +130,12 @@ export default {
     },
     [SET_NOTICE_INFO](state, data) {
       state.noticeInfo = { ...data };
+    },
+    [SET_COURSE_INFO](state, data) {
+      state.courseInfo = [...data];
+    },
+    [SET_CHAPTER_INFO](state, data) {
+      state.chapterInfo[data.id] = { ...data };
     }
   }
 };
