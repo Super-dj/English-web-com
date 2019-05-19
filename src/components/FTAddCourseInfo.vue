@@ -90,26 +90,32 @@
         </el-form-item>
       </div>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button type="primary" @click="onSubmit">{{ btnCont }}</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { FTMutationTypes, FTServerApi } from "FTConstants";
 import axios from "axios";
 import { FTApi } from "FTUtils";
 
-const { GET_USER_INFO } = FTMutationTypes;
+const { GET_USER_INFO, GET_DIALOG_STATUS, SET_CHAPTER_INFO } = FTMutationTypes;
 const { HOST_ADDRESS } = FTServerApi;
 export default {
   name: "FTAddCourseInfo",
-  computed: { ...mapGetters({ _userInfo: GET_USER_INFO }) },
+  computed: {
+    ...mapGetters({ _userInfo: GET_USER_INFO, _courseInfo: GET_DIALOG_STATUS }),
+    _courseStatus() {
+      return this._courseInfo.addCourse;
+    }
+  },
   data() {
     return {
       labelWidth: "80px",
+      btnCont: "立即创建",
       uploadFiles: HOST_ADDRESS + "/user/update",
       videoUrl: [],
       docUrl: [],
@@ -136,9 +142,46 @@ export default {
       },
       deep: true,
       immediate: true
+    },
+    _courseStatus: {
+      handler(curVal) {
+        if (Object.keys(curVal).length) {
+          this.btnCont = "修改";
+          this[SET_CHAPTER_INFO](curVal.id).then(res => {
+            if (Object.keys(res.data)) {
+              // this.info = { ...res.data };
+              // this.defaultUrl = res.data.list[0].url;
+              console.log(res.data);
+              let {
+                doc,
+                homework,
+                video,
+                pre,
+                name,
+                id,
+                specialty,
+                coursePart
+              } = res.data;
+              this.form.courseId = id;
+              this.form.courseName = name;
+              this.form.coursePart = coursePart;
+              this.form.specialty = specialty;
+              this.form.pre = pre;
+              this.form.video = video;
+              this.form.doc = doc;
+              this.form.homework = homework;
+            }
+          });
+        } else {
+          this.btnCont = "立即创建";
+        }
+      },
+      deep: true,
+      immediate: true
     }
   },
   methods: {
+    ...mapActions([SET_CHAPTER_INFO]),
     devUpload(fileObj) {
       let param = new FormData();
       param.append("file", fileObj.file);
@@ -148,7 +191,6 @@ export default {
           this.form[this.fileType][this.fileIndex].url = `${HOST_ADDRESS}/${
             data.url
           }`;
-          this.imageBigUrl = `${HOST_ADDRESS}/${data.url}`;
         }
       });
     },

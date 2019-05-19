@@ -43,7 +43,7 @@
         <div :class="$style.right">
           <div :class="$style.chapterList">
             <div
-              v-for="(item, index) in info.list"
+              v-for="(item, index) in info.video"
               :key="index"
               :class="$style.chapterItem"
               @click="_handleChapter(item)"
@@ -93,7 +93,7 @@ export default {
         this[SET_CHAPTER_INFO](this.courseId).then(res => {
           if (Object.keys(res.data)) {
             this.info = { ...res.data };
-            this.defaultUrl = res.data.list[0].url;
+            this.defaultUrl = res.data.video[0].url;
           }
         });
       },

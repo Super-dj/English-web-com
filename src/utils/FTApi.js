@@ -34,5 +34,12 @@ export const FTApi = {
   },
   FTAddCourseInfo(params) {
     return Axios.post("/user/addCourseInfo", qs.stringify({ ...params }));
+  },
+  FTGetMessage(_params) {
+    let params = { a: "1", ..._params };
+    return Axios.post("/user/getMessage", qs.stringify({ ...params }));
+  },
+  FTAddMessage(params) {
+    return Axios.post("/user/addMessage", qs.stringify({ ...params }));
   }
 };

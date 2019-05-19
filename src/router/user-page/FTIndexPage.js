@@ -1,6 +1,7 @@
 import { FTIndexPage, FTStudyPage } from "FTPages";
 import FTPage1 from "FTPages/module/FTPage1";
 import FTPage3 from "FTPages/module/FTPage3";
+import FTPage4 from "FTPages/module/FTPage4";
 import FTPersonalInfo from "FTPages/FTPersonalInfo";
 import FTChangeInfo from "FTComponents/FTChangeInfo";
 import FTChangePwd from "FTComponents/FTChangePwd";
@@ -35,6 +36,11 @@ export default {
           component: FTCourseAll
         }
       ]
+    },
+    {
+      path: "/page4",
+      name: "page4",
+      component: FTPage4
     },
     {
       path: "/personalInfo",
