@@ -1,4 +1,4 @@
-import { FTApi } from "FTUtils";
+import { FTApi, formatTime } from "FTUtils";
 import { FTMutationTypes } from "FTConstants";
 
 const {
@@ -13,7 +13,8 @@ const {
   GET_COURSE_INFO,
   SET_COURSE_INFO,
   GET_CHAPTER_INFO,
-  SET_CHAPTER_INFO
+  SET_CHAPTER_INFO,
+  DELETE_COURSE
 } = FTMutationTypes;
 
 export default {
@@ -117,6 +118,12 @@ export default {
           return { data };
         });
       }
+    },
+    [DELETE_COURSE]({ commit }, params) {
+      FTApi.FTDeleteCourse(params).then(res => {
+        let { code } = res.data;
+        if (code == 200) commit(DELETE_COURSE, params.index);
+      });
     }
   },
   mutations: {
@@ -133,9 +140,17 @@ export default {
     },
     [SET_COURSE_INFO](state, data) {
       state.courseInfo = [...data];
+      state.courseInfo.forEach(item => {
+        return (item.createTime = formatTime(
+          new Date(parseInt(item.createTime) * 1000)
+        ));
+      });
     },
     [SET_CHAPTER_INFO](state, data) {
       state.chapterInfo[data.id] = { ...data };
+    },
+    [DELETE_COURSE](state, data) {
+      state.courseInfo.splice(data, 1);
     }
   }
 };

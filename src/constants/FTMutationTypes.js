@@ -29,5 +29,6 @@ export default {
   SET_COURSE_INFO: "setCourseInfo",
   GET_CHAPTER_INFO: "getChapterInfo",
   SET_CHAPTER_INFO: "setChapterInfo",
-  GET_MESSAGE_INFO: "getMessageInfo"
+  GET_MESSAGE_INFO: "getMessageInfo",
+  DELETE_COURSE: "deleteCourse"
 };

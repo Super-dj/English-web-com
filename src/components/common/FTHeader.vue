@@ -2,6 +2,7 @@
   <div>
     <div :class="$style.container">
       <div :class="$style.title" @click="_backIndex">
+        <img src="../../assets/logo.jpg" alt="" />
         《专业外语》精品课程信息网
       </div>
       <div :class="$style.right">
@@ -30,8 +31,10 @@
           </el-button>
         </div>
         <div v-else>
-          <el-button size="mini" @click="_login">登录</el-button>
-          <el-button size="mini" @click="_forget">忘记密码</el-button>
+          <el-button style="width: 100%" size="mini" @click="_login"
+            >登录</el-button
+          >
+          <!--<el-button size="mini" @click="_forget">忘记密码</el-button>-->
         </div>
         <FTInput theme="light" :class="$style.searchBar"></FTInput>
       </div>
@@ -54,9 +57,12 @@ export default {
       userName: "administer",
       listInfo: [
         { lable: "首页", path: "/page1" },
-        { lable: "大讲堂", path: "/page2" },
-        { lable: "课程", path: "/page3" },
-        { lable: "论坛", path: "/page4" }
+        { lable: "课程建设规划", path: "/page7" },
+        { lable: "学习课程", path: "/page3" },
+        { lable: "网站论坛", path: "/page4" },
+        { lable: "最新公告", path: "/page6" },
+        { lable: "课程评价", path: "/page5" },
+        { lable: "学习帮助", path: "/page8" }
       ]
     };
   },
@@ -94,6 +100,11 @@ export default {
     margin: auto 0;
     font-size: 36px;
     cursor: pointer;
+    > img {
+      position: relative;
+      top: 10px;
+      height: 42px;
+    }
   }
   .right {
     display: flex;

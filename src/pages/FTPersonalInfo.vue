@@ -31,10 +31,24 @@
               route="/personalInfo/course"
               v-if="_userInfo.role"
             >
-              <span slot="title">查看授课信息</span>
+              <span slot="title">课程管理</span>
+            </el-menu-item>
+            <el-menu-item
+              index="4"
+              route="/personalInfo/message"
+              v-if="_userInfo.role"
+            >
+              <span slot="title">评论管理</span>
+            </el-menu-item>
+            <el-menu-item
+              index="5"
+              route="/personalInfo/student"
+              v-if="_userInfo.role"
+            >
+              <span slot="title">学生管理</span>
             </el-menu-item>
             <el-menu-item index="3" route="/personalInfo/course" v-else>
-              <span slot="title">查看选课信息</span>
+              <span slot="title">查看课程信息</span>
             </el-menu-item>
           </el-menu>
         </el-col>
@@ -109,6 +123,7 @@ export default {
   .right {
     position: relative;
     margin-left: 210px;
+    min-height: 739px;
   }
 }
 </style>

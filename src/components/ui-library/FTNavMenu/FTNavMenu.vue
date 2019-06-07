@@ -43,6 +43,7 @@ export default {
       handler(curVul) {
         if (curVul.path.indexOf("/page1") != -1) this.activeIndex = "0";
         if (curVul.path.indexOf("/page3") != -1) this.activeIndex = "2";
+        if (curVul.path.indexOf("/personalInfo") != -1) this.activeIndex = "";
       },
       deep: true
     }

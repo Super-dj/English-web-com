@@ -89,7 +89,8 @@
           </div>
         </el-form-item>
       </div>
-      <el-form-item>
+      <el-form-item class="btn--1">
+        <el-checkbox v-model="form.notice">发布公告</el-checkbox>
         <el-button type="primary" @click="onSubmit">{{ btnCont }}</el-button>
       </el-form-item>
     </el-form>
@@ -102,7 +103,12 @@ import { FTMutationTypes, FTServerApi } from "FTConstants";
 import axios from "axios";
 import { FTApi } from "FTUtils";
 
-const { GET_USER_INFO, GET_DIALOG_STATUS, SET_CHAPTER_INFO } = FTMutationTypes;
+const {
+  GET_USER_INFO,
+  GET_DIALOG_STATUS,
+  SET_CHAPTER_INFO,
+  HIDDEN_DIALOG
+} = FTMutationTypes;
 const { HOST_ADDRESS } = FTServerApi;
 export default {
   name: "FTAddCourseInfo",
@@ -130,7 +136,8 @@ export default {
         pre: "",
         video: [],
         doc: [],
-        homework: []
+        homework: [],
+        notice: false
       }
     };
   },
@@ -151,7 +158,6 @@ export default {
             if (Object.keys(res.data)) {
               // this.info = { ...res.data };
               // this.defaultUrl = res.data.list[0].url;
-              console.log(res.data);
               let {
                 doc,
                 homework,
@@ -181,10 +187,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions([SET_CHAPTER_INFO]),
+    ...mapActions([SET_CHAPTER_INFO, HIDDEN_DIALOG]),
     devUpload(fileObj) {
       let param = new FormData();
       param.append("file", fileObj.file);
+      console.log(fileObj.file);
       axios.post(this.uploadFiles, param).then(res => {
         let { data, code } = res.data;
         if (code == 200) {
@@ -200,7 +207,13 @@ export default {
     },
     onSubmit() {
       FTApi.FTAddCourseInfo(this.form).then(res => {
-        console.log(res);
+        let { code } = res.data;
+        if (code == 200) {
+          this.$message({ message: "修改成功", type: "success" });
+          this[HIDDEN_DIALOG]();
+        } else {
+          this.$message({ message: "修改失败", type: "error" });
+        }
       });
     },
     _addItem(type) {
@@ -217,10 +230,15 @@ export default {
 <style lang="less">
 .container {
   .el-input {
-    width: 200px;
+    width: 180px;
   }
   .el-textarea {
     width: 700px !important;
+  }
+  .btn--1 {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 </style>

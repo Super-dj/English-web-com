@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div
-      v-for="(item, index) in info"
-      :key="`i${index}`"
-      :class="$style.infoBox"
-    >
+    <div v-for="(item, index) in info" :key="index" :class="$style.infoBox">
       <div :class="$style.flex">
         <div>
           课程名：<span>{{ item.name }}</span>
@@ -16,10 +12,10 @@
           size="mini"
           class="el-icon-s-comment"
           :class="$style.messageIcon"
-          @click="showMessageBox"
+          @click="showMessageBox(index)"
         ></i>
       </div>
-      <div :class="$style.btn">
+      <div v-if="boxStatus[index]" :class="$style.btn">
         <div><input type="text" v-model="content" /></div>
         <el-button
           class="el-icon-s-promotion"
@@ -29,7 +25,12 @@
           >留言</el-button
         >
       </div>
-      <FTMessageItem :info="item" :courseId="item.id"></FTMessageItem>
+      <FTMessageItem
+        :info="item"
+        :courseId="item.id"
+        @checkItem="_clearBoxStatus"
+        @refreshInfo="refreshInfo"
+      ></FTMessageItem>
     </div>
   </div>
 </template>
@@ -43,9 +44,16 @@ import { FTMutationTypes } from "FTConstants";
 const { GET_MESSAGE_INFO, GET_USER_INFO, SHOW_DIALOG } = FTMutationTypes;
 export default {
   name: "FTPage4",
+  props: {
+    courseId: {
+      type: Number,
+      default: 0
+    }
+  },
   data() {
     return {
-      info: null,
+      info: {},
+      boxStatus: {},
       content: ""
     };
   },
@@ -53,7 +61,14 @@ export default {
   components: { FTMessageItem },
   methods: {
     ...mapActions([GET_MESSAGE_INFO, SHOW_DIALOG]),
-    showMessageBox() {},
+    showMessageBox(index) {
+      this.boxStatus[index] = this.boxStatus[index] ? false : true;
+      this.$forceUpdate();
+    },
+    _clearBoxStatus() {
+      this.boxStatus = {};
+      this.$emit("checkItem");
+    },
     submitMes(item) {
       if (localStorage.userInfo) {
         let params = {
@@ -63,17 +78,37 @@ export default {
         };
         FTApi.FTAddMessage({ ...params }).then(res => {
           if (res.data.code == 200) {
-            FTApi.FTGetMessage().then(res => {
-              this.info = { ...res.data.data };
-            });
+            this.refreshInfo();
+            this.content = "";
           }
         });
       } else this[SHOW_DIALOG]({ isShow: true, template: FTLogin });
+    },
+    refreshInfo() {
+      FTApi.FTGetMessage()
+        .then(res => {
+          if (this.courseId) {
+            this.info[this.courseId] = {
+              ...res.data.data[this.courseId]
+            };
+          } else this.info = { ...res.data.data };
+        })
+        .then(() => {
+          this.$forceUpdate();
+        });
     }
   },
   created() {
     FTApi.FTGetMessage().then(res => {
-      this.info = { ...res.data.data };
+      if (this.courseId) {
+        if (!res.data.data[this.courseId]) {
+          this.info[this.courseId] = {
+            id: this.courseId,
+            name: this.$store.state[3].chapterInfo[this.courseId].name
+          };
+        } else this.info[this.courseId] = { ...res.data.data[this.courseId] };
+      } else this.info = { ...res.data.data };
+      this.$forceUpdate();
     });
   }
 };

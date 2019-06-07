@@ -13,8 +13,8 @@
           width="120"
         ></el-table-column>
         <el-table-column
-          prop="pre"
-          label="课程简介"
+          prop="specialty"
+          label="所属专业"
           width="120"
         ></el-table-column>
         <el-table-column
@@ -34,15 +34,15 @@
         ></el-table-column>
         <el-table-column label="操作" width="100">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small"
-              >学习</el-button
-            >
+            <el-button @click="handleClick(scope.row)" type="text" size="small">
+              学习
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
     <div v-if="_userInfo.role == 1">
-      <el-button type="primary" @click="_addCourse">新建课程</el-button>
+      <!--<el-button type="primary" @click="_addCourse">新建课程</el-button>-->
       <el-table :data="_courseInfo">
         <el-table-column
           prop="id"
@@ -55,23 +55,34 @@
           width="120"
         ></el-table-column>
         <el-table-column
-          prop="pre"
-          label="课程简介"
-          width="120"
+          prop="specialty"
+          label="所属专业"
+          width="220"
         ></el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
-          width="120"
+          width="160"
         ></el-table-column>
-        <el-table-column label="操作" width="100">
+        <el-table-column label="操作" width="140">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small"
-              >查看</el-button
+            <el-button @click="handleClick(scope.row)" type="text" size="small">
+              查看
+            </el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="handleChange(scope.row)"
             >
-            <el-button type="text" size="small" @click="handleChange(scope.row)"
-              >编辑</el-button
+              编辑
+            </el-button>
+            <el-button
+              type="text"
+              size="small"
+              @click="handleDelete(scope.row, scope.$index)"
             >
+              删除
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -83,7 +94,12 @@
 import FTAddCourseInfo from "FTComponents/FTAddCourseInfo";
 import { mapGetters, mapActions } from "vuex";
 import { FTMutationTypes } from "FTConstants";
-const { GET_COURSE_INFO, GET_USER_INFO, SHOW_DIALOG } = FTMutationTypes;
+const {
+  GET_COURSE_INFO,
+  GET_USER_INFO,
+  SHOW_DIALOG,
+  DELETE_COURSE
+} = FTMutationTypes;
 export default {
   name: "FTCourseInfo",
   computed: {
@@ -93,7 +109,7 @@ export default {
     return {};
   },
   methods: {
-    ...mapActions([SHOW_DIALOG]),
+    ...mapActions([SHOW_DIALOG, DELETE_COURSE]),
     _addCourse() {
       this[SHOW_DIALOG]({ isShow: true, template: FTAddCourseInfo });
     },
@@ -106,6 +122,9 @@ export default {
         template: FTAddCourseInfo,
         addCourse: { ...item }
       });
+    },
+    handleDelete(item, index) {
+      this[DELETE_COURSE]({ ...item, index });
     }
   }
 };

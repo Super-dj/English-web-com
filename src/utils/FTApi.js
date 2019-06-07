@@ -41,5 +41,26 @@ export const FTApi = {
   },
   FTAddMessage(params) {
     return Axios.post("/user/addMessage", qs.stringify({ ...params }));
+  },
+  FTDeleteCourse(params) {
+    return Axios.post("/user/deleteCourse", qs.stringify({ ...params }));
+  },
+  FTDeleteMessage(params) {
+    return Axios.post("/user/deleteMessage", qs.stringify({ ...params }));
+  },
+  FTGetStudentInfo(params) {
+    return Axios.get("/user/studentInfo", { params });
+  },
+  FTDeleteStudentInfo(params) {
+    return Axios.get("/user/deleteStuInfo", { params });
+  },
+  FTAddHomeWork(params) {
+    return Axios.post("/user/addHomeWork", qs.stringify({ ...params }));
+  },
+  FTVideoStop(params) {
+    return Axios.post("/user/studyTime", qs.stringify({ ...params }));
+  },
+  FTHomeWork(params) {
+    return Axios.post("/user/homework", qs.stringify({ ...params }));
   }
 };

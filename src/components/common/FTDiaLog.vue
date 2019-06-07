@@ -9,7 +9,7 @@
     >
       <component :is="_dialogInfo.template"></component>
       <div class="closeIconBox" @click="handleClose">
-        <!--<div class="closeIconBox" @click="handleClose" v-show="canShowClose">-->
+        <i class="el-icon-close" style="color:#fff"></i>
       </div>
     </el-dialog>
   </div>
@@ -73,7 +73,7 @@ export default {
       display: none;
     }
     .el-dialog__body {
-      padding: 0;
+      padding: 14px 7px;
       min-height: 540px;
     }
   }
