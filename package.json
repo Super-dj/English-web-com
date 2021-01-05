@@ -12,7 +12,7 @@
     "mocks": "node ./api/index.js --watch ./api --watch ./public"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "element-ui": "^2.8.2",
     "register-service-worker": "^1.5.2",
     "vue": "^2.5.17",
